@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "node server.js",
-    "candy_cakers" : "nodemon server.js"
+    "server" : "nodemon server.js"
   },
   "author": "MadMaxIndian",
   "license": "ISC",

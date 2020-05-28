@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
 
+// Connecting mongoose
+mongoose.connect('mongodb://localhost:27017/candy_cakersDB',{ useNewUrlParser: true,useUnifiedTopology: true })
+
 // Router files
 const product = require("./router/product");
 const users = require("./router/users");
@@ -27,5 +30,4 @@ port = process.env.PORT || 5000;
 
 app.listen(port, (req,res) => {
     console.log("Server is running on port " + port);
-    
-})
+});

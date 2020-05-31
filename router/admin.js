@@ -3,26 +3,19 @@ const router = express.Router();
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const keys = require("../config/key")
-const passport = require("passport")
-require("../config/user-passport")(passport)
+const admin_passport = require("passport")
+require("../config/admin-passport")(admin_passport)
 
 
 // Load input validation
-const validateRegisterInput = require("./../validation/register")
-const validateLoginInput = require("./../validation/login");
+const validateRegisterInput = require("../validation/register")
+const validateLoginInput = require("../validation/login");
 
 // Load User Model
-const User = require("./../models/User")
+const Admin = require("../models/Admin")
 
-// @url     Get /api/users/
-// @desc    
-// @access  Public
-router.get("/",(req,res) => {
-    res.send("Users")
-})
-
-// @url     POST /api/users/register
-// @desc    Create or update user
+// @url     POST /api/admin/register
+// @desc    Create or update Admin
 // @access  Public
 router.post("/register",(req,res) => {
     // Input validation
@@ -38,17 +31,17 @@ router.post("/register",(req,res) => {
                 errors.email = 'Email already exist';
                 return res.status(400).json(errors)
             } else {
-                const newUser = new User({
+                const newAdmin = new Admin({
                     name : req.body.name,
                     email : req.body.email,
                     password : req.body.password
                 })
 
                 bcrypt.genSalt(10, (err, salt) => 
-                bcrypt.hash(newUser.password,salt, (err,hash) => {
+                bcrypt.hash(newAdmin.password,salt, (err,hash) => {
                     if (err) throw err;
-                    newUser.password = hash;
-                    newUser.save()
+                    newAdmin.password = hash;
+                    newAdmin.save()
                         .then(user => res.json(user))
                         .catch(err => console.log(err));
                 }))
@@ -56,8 +49,8 @@ router.post("/register",(req,res) => {
         })
 })
 
-// @route   POST api/users/login
-// @desc    Login User / returning token
+// @route   POST api/admin/login
+// @desc    Login Admin / returning token
 // @access  Public
 router.post("/login",(req,res) => {
     // Input validation
@@ -87,7 +80,7 @@ router.post("/login",(req,res) => {
 
                             // Sign Token
                             jwt.sign(payload,
-                                keys.secretOrKey,
+                                keys.adminKey,
                                 {expiresIn : 10000},
                                 (err, token) => {
                                     res.json({
@@ -104,14 +97,14 @@ router.post("/login",(req,res) => {
         })
 })
 
-// @route   GET api/users/current
+// @route   GET api/admin/
 // @desc    Return Current User
 // @access  Private
-router.get("/current",passport.authenticate('user-jwt',{session:false}),(req,res) => {
+router.get("/",admin_passport.authenticate('admin-jwt',{session:false}),(req,res) => {
     res.json({
         id : req.user.id,
         name : req.user.name,
-        email : req.user.email
+        email : req.user.email,
     })
 })
 

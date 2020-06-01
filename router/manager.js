@@ -8,16 +8,20 @@ require("../config/manager-passport")(manager_passport)
 
 
 // Load input validation
-const validateRegisterInput = require("../validation/register")
+const validateRegisterInput = require("../validation/manager_register")
 const validateLoginInput = require("../validation/login");
 
 // Load Manager Model
 const Admin = require("../models/Manager")
 
+// Admin passport
+const admin_passport = require("passport");
+require("./../config/admin-passport")(admin_passport);
+
 // @url     POST /api/manager/register
-// @desc    Create or update Admin
-// @access  Public
-router.post("/register",(req,res) => {
+// @desc    Create a  product manager account by authenticating admin
+// @access  Private / Admin
+router.post("/register",admin_passport.authenticate('admin-jwt',{session:false}),(req,res) => {
     // Input validation
     const {errors,isValid} = validateRegisterInput(req.body);
 
@@ -50,7 +54,7 @@ router.post("/register",(req,res) => {
 })
 
 // @route   POST api/manager/login
-// @desc    Login Admin / returning token
+// @desc    Login Manager / returning token
 // @access  Public
 router.post("/login",(req,res) => {
     // Input validation

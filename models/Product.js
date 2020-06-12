@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ProductSchema = new Schema({
+    productID : {
+        type : String
+    },
     title : {
         type: String,
     },
@@ -11,21 +14,17 @@ const ProductSchema = new Schema({
     },
     tags : [
         {
-            tag : {
-                type : String,
-            }
+            type : String
         }
     ],
     desc : {
         type : String
     },
-    similarProducts : [
-        {
-            productID : {
-                type : String,
-            },
+    similarProducts : {
+        productID : {
+            type : Array
         }
-    ],
+    },
     variations: [
         {
             title : {
@@ -38,35 +37,28 @@ const ProductSchema = new Schema({
                     },
                     value : {
                         type : String,
+                    },
+                    price : {
+                        type : Number,
                     }
                 }
             ],
         }
     ],
-    usageInstructions : [
-        {
-            value : {
-                type : String,
-            }
+    usageInstructions : {
+        type : Array,
+    },
+    deliveryInstructions : {
+        type : Array,
+    },
+    highlights : {
+        title : {
+            type : Array
+        },
+        value : {
+            type : Array
         }
-    ],
-    deliveryInstructions : [
-        {
-            valus : {
-                type : String
-            }
-        }
-    ],
-    highlights : [
-        {
-            title : {
-                type : String,
-            },
-            value : {
-                type : String,
-            }
-        }
-    ],
+    },
     // TO DO : PRODUCT IMG
     // productImg : [
     //     {
@@ -75,6 +67,14 @@ const ProductSchema = new Schema({
     //         }
     //     }
     // ],
+    manager : {
+        email : {
+            type : String,
+        },
+        id : {
+            type : String,
+        }
+    },
     date : {
         type : String,
         default : Date.now

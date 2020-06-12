@@ -12,7 +12,7 @@ const validateRegisterInput = require("../validation/manager_register")
 const validateLoginInput = require("../validation/login");
 
 // Load Manager Model
-const Admin = require("../models/Manager")
+const Manager = require("../models/Manager")
 
 // Admin passport
 const admin_passport = require("passport");
@@ -29,7 +29,7 @@ router.post("/register",admin_passport.authenticate('admin-jwt',{session:false})
         return res.status(400).json(errors)
     }
 
-    User.findOne({email : req.body.email})
+    Manager.findOne({email : req.body.email})
         .then(user => {
             if (user) {
                 errors.email = 'Email already exist';
@@ -68,7 +68,7 @@ router.post("/login",(req,res) => {
     const password = req.body.password;
 
     // Find user by email
-    User.findOne({email})
+    Manager.findOne({email})
         .then(user => {
             if (!user){
                 errors.email = 'User not Found';

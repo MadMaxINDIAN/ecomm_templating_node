@@ -25,7 +25,7 @@ router.post("/register",(req,res) => {
         return res.status(400).json(errors)
     }
 
-    User.findOne({email : req.body.email})
+    Admin.findOne({email : req.body.email})
         .then(user => {
             if (user) {
                 errors.email = 'Email already exist';
@@ -64,7 +64,7 @@ router.post("/login",(req,res) => {
     const password = req.body.password;
 
     // Find user by email
-    User.findOne({email})
+    Admin.findOne({email})
         .then(user => {
             if (!user){
                 errors.email = 'User not Found';

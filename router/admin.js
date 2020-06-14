@@ -11,7 +11,7 @@ require("../config/admin-passport")(admin_passport)
 const validateRegisterInput = require("../validation/register")
 const validateLoginInput = require("../validation/login");
 
-// Load User Model
+// Load Admin Model
 const Admin = require("../models/Admin")
 
 // @url     POST /api/admin/register
@@ -24,6 +24,8 @@ router.post("/register",(req,res) => {
     if (!isValid){
         return res.status(400).json(errors)
     }
+
+    // TODO only admin can register another admin and if there is no admin then it will be public route
 
     Admin.findOne({email : req.body.email})
         .then(user => {

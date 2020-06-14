@@ -3,82 +3,53 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const ProductSchema = new Schema({
-    productID : {
-        type : String
-    },
     title : {
-        type: String,
+        type : String
     },
     subtitle : {
-        type : String,
-    },
-    tags : [
-        {
-            type : String
-        }
-    ],
-    desc : {
         type : String
     },
-    similarProducts : {
-        productID : {
-            type : Array
-        }
+    description : {
+        type : String,
     },
-    variations: [
+    category : {
+        type : String,
+    },
+    // TODO stock of products
+    price : {
+        type : Number,
+    },
+    reviews : [
         {
-            title : {
-                type : String,
+            rating : {
+                type : Number
             },
-            values : [
-                {
-                    key : {
-                        type : String,
-                    },
-                    value : {
-                        type : String,
-                    },
-                    price : {
-                        type : Number,
-                    }
-                }
-            ],
+            desc : {
+                type : String,
+            }
         }
     ],
-    usageInstructions : {
-        type : Array,
-    },
-    deliveryInstructions : {
-        type : Array,
-    },
-    highlights : {
-        title : {
-            type : Array
-        },
-        value : {
-            type : Array
-        }
-    },
-    // TO DO : PRODUCT IMG
-    // productImg : [
+    // TODO
+    // highlights : [
     //     {
+    //         key : {
+    //             type : String
+    //         },
     //         value : {
-    //             type : String,
+    //             type : String
     //         }
     //     }
     // ],
     manager : {
-        email : {
-            type : String,
-        },
         id : {
             type : String,
+        },
+        name : {
+            type : String,
         }
-    },
-    date : {
-        type : String,
-        default : Date.now
-    },
+    }
+    // TODO product image
+    
 });
 
 module.exports = User = mongoose.model("Product",ProductSchema);

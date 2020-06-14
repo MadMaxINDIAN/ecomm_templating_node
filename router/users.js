@@ -14,11 +14,25 @@ const validateLoginInput = require("./../validation/login");
 // Load User Model
 const User = require("./../models/User")
 
-// @url     Get /api/users/
-// @desc    
-// @access  Public
-router.get("/",(req,res) => {
-    res.send("Users")
+// Admin passport
+const admin_passport = require("passport");
+require("./../config/admin-passport")(admin_passport);
+
+// @url     Get /api/users/all
+// @desc    Gives details of all the user
+// @access  Private / Admin access only
+router.get("/all",admin_passport.authenticate('admin-jwt',{session:false}),(req,res) => {
+    const errors = {}
+    User.find({},(err,users) => {
+        if (users) {
+            res.send(users)
+        } else {
+            console.log(users);
+            
+            errors.nouser = "There is no user registered yet."
+            res.status(404).json(errors)
+        }
+    })
 })
 
 // @url     POST /api/users/register

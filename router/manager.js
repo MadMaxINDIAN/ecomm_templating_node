@@ -14,9 +14,29 @@ const validateLoginInput = require("../validation/login");
 // Load Manager Model
 const Manager = require("../models/Manager")
 
+// Load Admin model
+const Admin = require("../models/Admin")
+
 // Admin passport
 const admin_passport = require("passport");
 require("./../config/admin-passport")(admin_passport);
+
+// @url     Get /api/manager/all
+// @desc    Gives details of all the manager
+// @access  Private / Admin access only
+router.get("/all",admin_passport.authenticate('admin-jwt',{session:false}),(req,res) => {
+    const errors = {}
+    Manager.find({},(err,users) => {
+        if (users) {
+            res.send(users)
+        } else {
+            console.log(users);
+            
+            errors.nouser = "There is no manager registered yet."
+            res.status(404).json(errors)
+        }
+    })
+})
 
 // @url     POST /api/manager/register
 // @desc    Create a  product manager account by authenticating admin
@@ -35,17 +55,22 @@ router.post("/register",admin_passport.authenticate('admin-jwt',{session:false})
                 errors.email = 'Email already exist';
                 return res.status(400).json(errors)
             } else {
-                const newAdmin = new Admin({
+                const newManager = new Manager({
                     name : req.body.name,
                     email : req.body.email,
-                    password : req.body.password
+                    password : req.body.password,
+                    city : req.body.city,
+                    address_line1 : req.body.address_line1,
+                    address_line2 : req.body.address_line2,
+                    address_line3 : req.body.address_line3,
+                    experience : req.body.experience
                 })
 
                 bcrypt.genSalt(10, (err, salt) => 
-                bcrypt.hash(newAdmin.password,salt, (err,hash) => {
+                bcrypt.hash(newManager.password,salt, (err,hash) => {
                     if (err) throw err;
-                    newAdmin.password = hash;
-                    newAdmin.save()
+                    newManager.password = hash;
+                    newManager.save()
                         .then(user => res.json(user))
                         .catch(err => console.log(err));
                 }))
@@ -71,7 +96,7 @@ router.post("/login",(req,res) => {
     Manager.findOne({email})
         .then(user => {
             if (!user){
-                errors.email = 'User not Found';
+                errors.email = 'Manager not Found';
                 return res.status(404).json(errors)
             } else {
                 // Check Password

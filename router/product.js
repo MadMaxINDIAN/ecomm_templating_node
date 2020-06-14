@@ -9,56 +9,50 @@ const validateProductInput = require("./../validation/product");
 
 // Product Model
 const Product = require("./../models/Product");
+const product = require("./../validation/product");
 
 // @url     POST /api/product/details
 // @desc    Add or update product
 // @access  Private / Product Manager access only
 router.post("/details",manager_passport.authenticate('manager-jwt',{session:false}),(req,res) => {
-    req.body.highlights = JSON.parse(req.body.highlights)
-    req.body.similarProducts = JSON.parse(req.body.similarProducts)
-    req.body.usageInstructions = req.body.usageInstructions.split(",")
-    req.body.deliveryInstructions = req.body.deliveryInstructions.split(",")
-    console.log(req.body);
-    
-    // Input validation
     const {errors,isValid} = validateProductInput(req.body);
 
     if (!isValid){
         return res.status(400).json(errors)
     }
 
-    Product.findOne({productID : req.body.productID})
+    console.log(req.body);
+    
+    
+    Product.findOne({title : req.body.title})
         .then(product => {
-            if (product){
-                errors.productID = "Product Id already Exist";
-                res.status(400).json(errors)
-            }
-            else {
-                const manager = {
-                    email : req.user.email,
-                    id : req.user._id
+            if (product) {
+                errors.email = 'Product with same title already exist';
+                return res.status(400).json(errors)
+            } else {
+                const manager ={
+                    id : req.user._id,
+                    name : req.user.name
                 }
-                
-
                 const newProduct = new Product({
-                    productID : req.body.productID,
+                    manager : manager,
                     title : req.body.title,
                     subtitle : req.body.subtitle,
-                    tags : req.body.tags.split(","),
-                    desc : req.body.desc,
-                    similarProducts : req.body.similarProducts,
-                    variations : req.body.variations,
-                    usageInstructions : req.body.usageInstructions,
-                    deliveryInstructions : req.body.deliveryInstructions,
-                    highlights : req.body.highlights,
-                    manager : manager,
-                    date : req.body.date
+                    description : req.body.description,
+                    category : req.body.category,
+                    price : req.body.price,
+                    // TODO
+                    // highlights : req.body.highlights
                 })
 
                 newProduct.save()
                     .then(product => {
-                        res.send(product)
-                    });
+                        res.json(product)
+                    })
+                    .catch(err => {
+                        res.status(400).json(err)
+                    })
+                
             }
         })
 })
@@ -71,7 +65,7 @@ router.get("/all",manager_passport.authenticate('manager-jwt',{session:false}),(
     // Initialising ERRORS
     const errors = {}
     
-   Product.find({},products => {
+   Product.find({},(err,products) => {
        if (products) {
            res.json(products)
        } else {
@@ -80,4 +74,5 @@ router.get("/all",manager_passport.authenticate('manager-jwt',{session:false}),(
        }
    })
 })
+
 module.exports = router;

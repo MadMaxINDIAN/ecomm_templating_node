@@ -6,10 +6,12 @@ const mongoose = require("mongoose");
 
 // Validation
 const validateProductInput = require("./../validation/product");
+const validateReviewInput = require("./../validation/review");
 
 // Product Model
 const Product = require("./../models/Product");
 const product = require("./../validation/product");
+const { ObjectId } = require("mongoose");
 
 // @url     POST /api/product/details
 // @desc    Add or update product
@@ -73,6 +75,52 @@ router.get("/all",manager_passport.authenticate('manager-jwt',{session:false}),(
            res.status(404).json(errors)
        }
    })
+})
+
+// @url     Post /api/product/:productID/review
+// @desc    Add a review to the product with the given productID
+// @access  Public
+router.post("/:productID/review",(req,res) => {
+    const productID = req.params.productID
+    const {errors,isValid} = validateReviewInput(req.body);
+
+    // console.log(productID);
+    
+    if (!isValid){
+        return res.status(400).json(errors)
+    }
+    Product.findOne({_id :{$in : [productID]}},(err,product) => {
+        if (!product){
+            errors.noproduct = "Invalid ProductID"
+            res.status(404).json(errors)
+        }else {
+            const newReview = {
+                rating : req.body.rating,
+                desc : req.body.desc,
+                date : Date.now()
+            }
+            product.reviews.unshift(newReview)
+            const update = product
+            Product.findOneAndUpdate({_id : productID},update,{new:true})
+                .then(product => res.json(product))
+                .catch(err => res.status(400).json(err))
+        }
+    })
+})
+
+// @url     get /api/product/:productID/review
+// @desc    get all the review for the given productID
+// @access  Public
+router.get("/:productID/review",(req,res) => {
+    const productID = req.params.productID
+    Product.findOne({_id :{$in : [productID]}},(err,product) => {
+        if (!product){
+            errors.noproduct = "Invalid ProductID"
+            res.status(404).json(errors)
+        }else {
+            res.json(product.reviews)
+        }
+    })
 })
 
 module.exports = router;

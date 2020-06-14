@@ -26,6 +26,9 @@ const ProductSchema = new Schema({
             },
             desc : {
                 type : String,
+            },
+            date : {
+                type : Date
             }
         }
     ],

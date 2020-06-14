@@ -12,6 +12,7 @@ const product = require("./router/product");
 const users = require("./router/users");
 // const cart = require("./router/cart");
 const admin = require("./router/admin");
+const order = require("./router/order");
 const manager = require("./router/manager");
 
 // Initialising app
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended : true}))
 app.use("/api/product/",product);
 app.use("/api/users/",users);
 // app.use("/api/cart/",cart);
+app.use("/api/order/",order)
 app.use("/api/admin/",admin)
 app.use("/api/manager/",manager)
 

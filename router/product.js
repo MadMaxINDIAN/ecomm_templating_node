@@ -43,6 +43,7 @@ router.post("/details",manager_passport.authenticate('manager-jwt',{session:fals
                     description : req.body.description,
                     category : req.body.category,
                     price : req.body.price,
+                    date : Date.now()
                     // TODO
                     // highlights : req.body.highlights
                 })
@@ -59,11 +60,10 @@ router.post("/details",manager_passport.authenticate('manager-jwt',{session:fals
         })
 })
 
-
 // @url     GET /api/product/all
 // @desc    Show all the products
-// @access  Private / Product Manager access only
-router.get("/all",manager_passport.authenticate('manager-jwt',{session:false}),(req,res) => {
+// @access  Public
+router.get("/all",(req,res) => {
     // Initialising ERRORS
     const errors = {}
     
@@ -119,6 +119,21 @@ router.get("/:productID/review",(req,res) => {
             res.status(404).json(errors)
         }else {
             res.json(product.reviews)
+        }
+    })
+})
+
+// @url     get /api/product/:productID
+// @desc    get product desc for productID
+// @access  Public
+router.get("/:productID",(req,res) => {
+    const productID = req.params.productID
+    Product.findOne({_id :{$in : [productID]}},(err,product) => {
+        if (!product){
+            errors.noproduct = "Invalid ProductID"
+            res.status(404).json(errors)
+        }else {
+            res.json(product)
         }
     })
 })

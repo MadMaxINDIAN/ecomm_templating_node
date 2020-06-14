@@ -50,6 +50,9 @@ const ProductSchema = new Schema({
         name : {
             type : String,
         }
+    },
+    date : {
+        type : Date
     }
     // TODO product image
     

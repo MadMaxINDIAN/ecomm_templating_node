@@ -194,3 +194,54 @@ a:hover {
 .details-info li,.details-action li {
   margin: 1rem;
 }
+
+/* Container CSS */
+.container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media(max-width : 1200px) {
+  [class = "container"] {
+    width: 960px;
+  }
+}
+@media(max-width : 992px) {
+  [class = "container"] {
+    width: 720px;
+  }
+}
+@media(max-width : 768px) {
+  [class = "container"] {
+    width: 540px;
+  }
+}
+@media(max-width : 576px) {
+  [class = "container"] {
+    width: 100%;
+  }
+}
+
+/* Form */
+.form {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #ff8000;
+}
+.form-text-input{
+  width: 70%;
+  border-color: #ff8000;
+  box-shadow: #ff8000;
+  text-shadow: #ff8000;
+  color: #ff8000;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.form-submit-button {
+  background-color: #ff8000;
+  color: #fff;
+  border: 0%;
+  box-shadow: 0px;
+  width: 60%;
+}

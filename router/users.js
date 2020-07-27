@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
-const keys = require("../config/key")
-const passport = require("passport")
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const keys = require("../config/key");
+const passport = require("passport");
 require("../config/user-passport")(passport)
-
 
 // Load input validation
 const validateRegisterInput = require("./../validation/register")
@@ -39,10 +38,13 @@ router.get("/all",admin_passport.authenticate('admin-jwt',{session:false}),(req,
 // @desc    Create or update user
 // @access  Public
 router.post("/register",(req,res) => {
+    console.log(req);
     // Input validation
     const {errors,isValid} = validateRegisterInput(req.body);
-
+    
     if (!isValid){
+        console.log(errors);
+        
         return res.status(400).json(errors)
     }
 

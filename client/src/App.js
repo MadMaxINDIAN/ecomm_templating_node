@@ -8,6 +8,8 @@ import ProductScreen from './Screens/ProductScreen';
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
 import Footer from "./components/Footer"
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
 
 function App() {
   return ( 
@@ -19,8 +21,9 @@ function App() {
         <main className="main">
             <div className="content">
                 <Route path="/" exact={true} component={HomeScreen} />
-                <Route path="/index.html" exact={true} component={HomeScreen} ></Route>
-                <Route path="/product/:productID" component={ProductScreen} />         
+                <Route path="/product/:productID" component={ProductScreen} />
+                <Route path="/register" exact={true} component={Register} />
+                <Route path="/login" exact={true} component={Login} />        
             </div>
         </main>
         <Footer />

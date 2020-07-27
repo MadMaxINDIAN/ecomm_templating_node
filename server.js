@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const database = "ecomm_templatingDB"
 
 // Connecting mongoose
-mongoose.connect('mongodb://localhost:27017/'+ database,{ useNewUrlParser: true,useUnifiedTopology: true },() => console.log("MongoDB connected"))
+mongoose.connect("mongodb+srv://admin-naman:20010922@madmaxindian-mttom.mongodb.net/" + database,{ useNewUrlParser: true,useUnifiedTopology: true },() => console.log("MongoDB connected"))
 
 // Router files
 const product = require("./router/product");

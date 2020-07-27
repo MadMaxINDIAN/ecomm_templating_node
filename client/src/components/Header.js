@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Header(props){
     const openMenu = () => {
@@ -19,19 +20,11 @@ function Header(props){
             <div className="header-basic">
                 <div className="brand">
                     <button onClick={openMenu} className="sidebar-button">&#9776;</button>
-                    <a href="index.html">  progam_A_Coder</a>
-                    {/* <img className="brand-image" src="logo.png" alt="product" /> */}
+                    <Link to="/">program_A_Coder</Link>
                 </div>
-                {/* <div className="header-links">
-                    <a href="category1">T shirt</a>
-                    <a href="category2">Half sleve Shirt</a>
-                    <a href="category3">Full Sleve Shirt</a>
-                    <a href="category4">Joggers</a>
-                    <a href="category5">Trousers</a>
-                </div> */}
                 <div className="header-links">
                     <a href="cart">Cart</a>
-                    <a href="signin">Sign in</a>
+                    <Link to="register">Sign in</Link>
                 </div>
             </div>
             <div className="header-navbar">

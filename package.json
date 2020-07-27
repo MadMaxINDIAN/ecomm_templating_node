@@ -5,13 +5,17 @@
   "main": "server.js",
   "scripts": {
     "test": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client-install": "npm install --prefix client",
+    "client" : "npm start --prefix client",
+    "ecommerce" : "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "MadMaxIndian",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",

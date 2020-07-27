@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
 import HomeScreen from "./Screens/HomeScreen";
-import {BrowserRouter, Route} from "react-router-dom"
+import {BrowserRouter as Router, Route} from "react-router-dom"
+import {Provider} from "react-redux"
+import store from "./store"
 import ProductScreen from './Screens/ProductScreen';
 import Header from "./components/Header"
 import Sidebar from "./components/Sidebar"
@@ -9,8 +11,9 @@ import Footer from "./components/Footer"
 
 function App() {
   return ( 
-        <BrowserRouter>
-    <div className="grid-container">
+        <Provider store = {store}>
+        <Router>
+        <div className="grid-container">
         <Header />
         <Sidebar />
         <main className="main">
@@ -22,7 +25,8 @@ function App() {
         </main>
         <Footer />
     </div>
-    </BrowserRouter>
+    </Router>
+    </Provider>
   );
 }
 

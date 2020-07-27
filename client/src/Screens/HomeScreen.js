@@ -1,13 +1,11 @@
 import React from "react";
 import data from "./../data"
+import Banner from "./../components/Banner"
 
 function HomeScreen(props){
     return (
-        
         <div>
-            <div class="banner">
-                <img src="program_A_Coder.jpg" className="banner-img" />
-            </div>
+            <Banner />
             <ul className="products">
                 {data.products.map(product => 
                     <li>

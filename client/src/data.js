@@ -1,7 +1,7 @@
 export default {
     products : [{
         name : "Shirt",
-        image : "product.jpg",
+        image : "product.png",
         price : 60,
         brand : "Nike",
         rating : 4.5,
@@ -9,7 +9,7 @@ export default {
     },
     {
         name : "Shirt",
-        image : "product.jpg",
+        image : "product.png",
         price : 60,
         brand : "Nike",
         rating : 4.5,
@@ -17,7 +17,7 @@ export default {
     },
     {
         name : "Shirt",
-        image : "product.jpg",
+        image : "product.png",
         price : 60,
         brand : "Nike",
         rating : 4.5,
@@ -25,7 +25,7 @@ export default {
     },
     {
         name : "Shirt",
-        image : "product.jpg",
+        image : "product.png",
         price : 60,
         brand : "Nike",
         rating : 4.5,

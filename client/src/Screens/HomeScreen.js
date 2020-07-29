@@ -10,7 +10,7 @@ function HomeScreen(props){
                 {data.products.map(product => 
                     <li>
                         <div className="product">
-                            <img src="product.jpg"></img>
+                            <img src="product.png" alt=""></img>
                             <div className="product-name">{product.name}</div>
                             <div className="product-brand">{product.brand}</div>
                             <div className="product-price">{product.price}</div>

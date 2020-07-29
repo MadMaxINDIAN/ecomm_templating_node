@@ -21,6 +21,9 @@ const app = express();
 // Setting bodyParser
 app.use(bodyParser.urlencoded({extended : true}))
 
+// Parsing JSON
+app.use(express.json());
+
 // Initialising router
 app.use("/api/product/",product);
 app.use("/api/users/",users);

@@ -26,14 +26,11 @@ class Register extends Component {
             password2 : this.state.password2
         };
         console.log(newUser);
-        axios.post("/api/users/register",{
-            headers: {"Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json'},
-            params : newUser
-        })
+        axios.post("/api/users/register",newUser)
         .then(res => console.log(res))
         .catch(err => console.log(err));
-    }
+}
+
 
     render() {
         return (

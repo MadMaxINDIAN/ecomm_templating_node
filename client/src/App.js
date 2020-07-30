@@ -10,6 +10,19 @@ import Sidebar from "./components/Sidebar"
 import Footer from "./components/Footer"
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import {setCurrentUser} from "./actions/authActions";
+
+// Check for Token
+if (localStorage.jwtToken) {
+  // Set auth token Header
+  setAuthToken(localStorage.jwtToken);
+  // Decode Token
+  const decoded = jwt_decode(localStorage.jwtToken);
+  // Set user and isAuthorised
+  store.dispatch(setCurrentUser(decoded))
+}
 
 function App() {
   return ( 

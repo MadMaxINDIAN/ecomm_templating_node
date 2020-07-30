@@ -5,7 +5,7 @@ function Sidebar(props){
         document.querySelector(".sidebar").classList.remove("open");
       }
     return (
-        <aside className="sidebar">
+        <aside className="sidebar navbars">
             <h3>Shopping categories</h3>
             <button className="sidebar-close-button" onClick={closeMenu}>x</button>
             <ul>

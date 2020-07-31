@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {logoutUser} from "../actions/authActions";
+import {logoutUser,logoutAdmin,logoutManager} from "../actions/authActions";
 
 class Header extends Component {
 
     onLogoutClick (e) {
         e.preventDefault();
         this.props.logoutUser();
+        this.props.logoutAdmin();
+        this.props.logoutManager();
     }
 
     render() {
@@ -20,7 +22,7 @@ class Header extends Component {
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <a className="nav-links" onClick={this.onLogoutClick.bind(this)} style={{cursor : "grabbing"}}>
-                                <img src="user.png" style={{width: "40px",marginRight: "20px", borderRadius: "50%"}}/>
+                                <img src="/user.png" style={{width: "40px",marginRight: "20px", borderRadius: "50%"}}/>
                             </a>
                         </li>
                         <br></br>
@@ -106,6 +108,8 @@ class Header extends Component {
 
 Header.propTypes = {
     logoutUser : PropTypes.func.isRequired,
+    logoutAdmin : PropTypes.func.isRequired,
+    logoutManager : PropTypes.func.isRequired,
     auth : PropTypes.object.isRequired
 }
 
@@ -113,4 +117,4 @@ const mapStateToProps = (state) => ({
     auth : state.auth
 })
 
-export default connect(mapStateToProps, { logoutUser } )(Header);
+export default connect(mapStateToProps, { logoutUser,logoutAdmin ,logoutManager} )(Header);

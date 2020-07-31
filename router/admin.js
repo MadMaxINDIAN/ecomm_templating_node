@@ -17,7 +17,8 @@ const Admin = require("../models/Admin")
 // @url     POST /api/admin/register
 // @desc    Create or update Admin
 // @access  Public
-router.post("/register",(req,res) => {
+// router.post("/register",(req,res) => {
+router.post("/register",admin_passport.authenticate('admin-jwt',{session:false}),(req,res) => {
     // Input validation
     const {errors,isValid} = validateRegisterInput(req.body);
 

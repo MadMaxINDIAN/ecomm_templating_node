@@ -1,17 +1,20 @@
-import React, { Component } from 'react'
-import classnames from "classnames";
+import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import classnames from "classnames";
 import { connect } from "react-redux";
-import { loginUser } from "./../../actions/authActions";
+import {registerAdmin} from "./../../actions/authActions";
+import Sidebar from '../Sidebar';
 import Header from "./../Header";
-import Sidebar from "./../Sidebar";
 
-class Login extends Component {
+class AdminRegister extends Component {
     constructor (){
         super();
         this.state = {
+            name : "",
             email : "",
             password : "",
+            password2 : "",
             errors : {}
         }
         this.onChange = this.onChange.bind(this);
@@ -19,17 +22,14 @@ class Login extends Component {
     }
 
     componentDidMount (){
-        if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/cart");
+        if (!this.props.auth.isAuthenticated) {
+            this.props.history.push("/");
         }
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/cart")
-        }
+    componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
-            this.setState({errors: nextProps.errors})
+            this.setState({errors : nextProps.errors})
         }
     }
 
@@ -38,12 +38,16 @@ class Login extends Component {
     }
     onSubmit(e){
         e.preventDefault();
-        const User = {
+        var newUser = {
+            name : this.state.name,
             email : this.state.email,
             password : this.state.password,
-        }
-        this.props.loginUser(User);
-    }
+            password2 : this.state.password2
+        };
+
+        this.props.registerAdmin(newUser,this.props.history)
+}
+
 
     render() {
         const { errors } = this.state;
@@ -53,9 +57,22 @@ class Login extends Component {
                 <Sidebar />
             <div className="container">
                 <div className="form header-margin">
-                    <h1 style={{'textAlign' : "center"}}>Login</h1>
-                    <h3 style={{'textAlign' : "center"}}></h3>
+                    <h1 style={{'textAlign' : "center"}}>Register for new admin</h1>
+                    <h3 style={{'textAlign' : "center"}}>You are going to create another admin</h3>
                     <form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <input 
+                            name="name" 
+                            placeholder="Name" 
+                            className={classnames("form-control", {
+                                "is-invalid" : errors.name
+                            })}
+                            type="text"
+                            value= {this.state.name} 
+                            onChange={this.onChange}>
+                            </input>
+                        {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
+                        </div>
                         <div className="form-group">
                             <input 
                             name="email" 
@@ -82,7 +99,21 @@ class Login extends Component {
                             </input>
                             {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
                         </div>
+                        <div className="form-group">
+                            <input 
+                            name="password2" 
+                            onChange={this.onChange}
+                            type="password"
+                            placeholder="Confirm Password" 
+                            value={this.state.password2}
+                            className={classnames("form-control", {
+                                "is-invalid" : errors.password2
+                            })}>
+                            </input>
+                            {errors.password2 && (<div className="invalid-feedback">{errors.password2}</div>)}
+                        </div>
                         <br></br>
+                        {errors.unauthorized && <div className="invalid-authorization">{errors.unauthorized}</div>}
                         <div className="form-group" ><button className="btn btn-warning btn-block">Submit</button></div>
                         
                     </form>
@@ -93,15 +124,15 @@ class Login extends Component {
     }
 }
 
-Login.propTypes = {
-    loginUser : PropTypes.func.isRequired,
+AdminRegister.propTypes = {
+    registerAdmin : PropTypes.func.isRequired,
     auth : PropTypes.object.isRequired,
     errors : PropTypes.object.isRequired
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     auth : state.auth,
     errors : state.errors
 })
 
-export default connect(mapStateToProps , {loginUser})(Login)
+export default connect(mapStateToProps, {registerAdmin})(withRouter(AdminRegister));

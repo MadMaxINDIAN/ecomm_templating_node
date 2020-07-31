@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loginUser } from "./../../actions/authActions";
+import { loginManager } from "./../../actions/authActions";
 import Header from "./../Header";
 import Sidebar from "./../Sidebar";
 
-class Login extends Component {
+class ManagerLogin extends Component {
     constructor (){
         super();
         this.state = {
@@ -20,13 +20,13 @@ class Login extends Component {
 
     componentDidMount (){
         if (this.props.auth.isAuthenticated) {
-            this.props.history.push("/cart");
+            this.props.history.push("/");
         }
     }
 
     componentWillReceiveProps(nextProps){
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push("/cart")
+            this.props.history.push("/")
         }
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors})
@@ -42,7 +42,7 @@ class Login extends Component {
             email : this.state.email,
             password : this.state.password,
         }
-        this.props.loginUser(User);
+        this.props.loginManager(User);
     }
 
     render() {
@@ -93,8 +93,8 @@ class Login extends Component {
     }
 }
 
-Login.propTypes = {
-    loginUser : PropTypes.func.isRequired,
+ManagerLogin.propTypes = {
+    loginManager : PropTypes.func.isRequired,
     auth : PropTypes.object.isRequired,
     errors : PropTypes.object.isRequired
 }
@@ -104,4 +104,4 @@ const mapStateToProps = state => ({
     errors : state.errors
 })
 
-export default connect(mapStateToProps , {loginUser})(Login)
+export default connect(mapStateToProps , {loginManager})(ManagerLogin)

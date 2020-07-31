@@ -4,11 +4,15 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import Banner from "./../components/Banner";
+import Header from "./../components/Header";
+import Sidebar from "./../components/Sidebar";
 
 class HomeScreen extends Component{
     render () {
     return (
         <div>
+            <Header />
+            <Sidebar />
             <Banner />
             <br></br>
             <br/>

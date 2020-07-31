@@ -1,9 +1,12 @@
-import { SET_CURRENT_USER } from "./../actions/type";
+import { SET_CURRENT_USER, SET_CURRENT_ADMIN, SET_CURRENT_MANAGER } from "./../actions/type";
 import isEmpty from "./../validation/isEmpty"
+import { StaticRouter } from "react-router-dom";
 
 const initialState ={
     isAuthenticated :false,
-    user : {}
+    user : {},
+    admin : {},
+    manager : {}
 }
 
 export default function(state = initialState,action){
@@ -13,6 +16,18 @@ export default function(state = initialState,action){
             ...state,
             isAuthenticated: !isEmpty(action.payload),
             user : action.payload
+        }
+        case SET_CURRENT_ADMIN : 
+        return {
+            ...state,
+            isAuthenticated : !isEmpty(action.payload),
+            admin : action.payload
+        }
+        case SET_CURRENT_MANAGER : 
+        return {
+            ...state,
+            isAuthenticated : !isEmpty(action.payload),
+            manager : action.payload
         }
         default:
             return state;

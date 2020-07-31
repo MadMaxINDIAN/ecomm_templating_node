@@ -198,3 +198,11 @@ body {
 .open {
   transform: translateX(0rem);
 }
+
+
+/* Invalid Authorisation */
+.invalid-authorization {
+  color : red;
+  font-size: 2rem;
+  text-align: center;
+}

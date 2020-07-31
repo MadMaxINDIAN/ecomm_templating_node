@@ -4,6 +4,8 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import {registerUser} from "./../../actions/authActions";
+import Sidebar from '../Sidebar';
+import Header from "./../Header";
 
 class Register extends Component {
     constructor (){
@@ -50,6 +52,9 @@ class Register extends Component {
     render() {
         const { errors } = this.state;
         return (
+            <div>
+                <Header />
+                <Sidebar />
             <div className="container">
                 <div className="form header-margin">
                     <h1 style={{'textAlign' : "center"}}>Sign up</h1>
@@ -112,6 +117,7 @@ class Register extends Component {
                         
                     </form>
                 </div>
+            </div>
             </div>
         )
     }

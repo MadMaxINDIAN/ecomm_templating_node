@@ -19,6 +19,12 @@ class Register extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount (){
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/cart");
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.errors) {
             this.setState({errors : nextProps.errors})
@@ -45,7 +51,7 @@ class Register extends Component {
         const { errors } = this.state;
         return (
             <div className="container">
-                <div className="form">
+                <div className="form header-margin">
                     <h1 style={{'textAlign' : "center"}}>Sign up</h1>
                     <h3 style={{'textAlign' : "center"}}>Create your own account to shop</h3>
                     <form onSubmit={this.onSubmit}>

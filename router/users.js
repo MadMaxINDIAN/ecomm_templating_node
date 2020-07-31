@@ -38,13 +38,10 @@ router.get("/all",admin_passport.authenticate('admin-jwt',{session:false}),(req,
 // @desc    Create or update user
 // @access  Public
 router.post("/register",(req,res) => {
-    console.log(req.body)
     // Input validation
     const {errors,isValid} = validateRegisterInput(req.body);
     
     if (!isValid){
-        console.log(errors);
-        
         return res.status(400).json(errors)
     }
 

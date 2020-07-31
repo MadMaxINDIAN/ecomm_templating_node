@@ -13,6 +13,8 @@ import Login from './components/auth/Login';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import {setCurrentUser} from "./actions/authActions";
+import { decode } from 'jsonwebtoken';
+import { SET_CURRENT_USER } from './actions/type';
 
 // Check for Token
 if (localStorage.jwtToken) {
@@ -22,6 +24,15 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken);
   // Set user and isAuthorised
   store.dispatch(setCurrentUser(decoded))
+  // Check for expired token
+  const currentTime = Date.now()/1000;
+  if (currentTime > decoded.exp) {
+    // Logout User
+    store.dispatch(SET_CURRENT_USER);
+    // TODO : CLEAR CART DATA
+    // Redirect to login
+    window.location.href = "/login";
+  }
 }
 
 function App() {

@@ -16,6 +16,12 @@ class Login extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
+    componentDidMount (){
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/cart");
+        }
+    }
+
     componentWillReceiveProps(nextProps){
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push("/cart")
@@ -41,7 +47,7 @@ class Login extends Component {
         const { errors } = this.state;
         return (
             <div className="container">
-                <div className="form">
+                <div className="form header-margin">
                     <h1 style={{'textAlign' : "center"}}>Login</h1>
                     <h3 style={{'textAlign' : "center"}}></h3>
                     <form onSubmit={this.onSubmit}>

@@ -3,7 +3,8 @@ import Header from "../Header";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import classnames from "classnames";
-import Axios from "axios";
+import { addProduct } from "./../../actions/productActions";
+import { Link } from "react-router-dom";
 
 class Product extends Component {
 
@@ -11,6 +12,7 @@ class Product extends Component {
         super();
         this.state = {
             title : "",
+            progress : 0,
             subtitle : "",
             description : "",
             category : "",
@@ -27,9 +29,19 @@ class Product extends Component {
         this.addImage = this.addImage.bind(this);
     }
 
+    
+    componentDidMount (){
+        if (!this.props.auth.isAuthenticated || !localStorage.managerJwtToken ) {
+            this.props.history.push("/");
+        }
+    }
+
     componentWillReceiveProps(nextProps){
         if (nextProps.errors) {
             this.setState({errors: nextProps.errors})
+        }
+        if (nextProps.product) {
+            this.setState({progress : nextProps.product.progress})
         }
     }
     
@@ -88,11 +100,7 @@ class Product extends Component {
             for (var i = 0; i < this.state.productimages.length; i++){
                 formData.append("image",this.state.productimages[i].image,this.state.productimages[i].image.filename)
             }
-            // console.log(formData);
-            Axios.post("/api/product/details", formData)
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-            console.log(FormData);
+            this.props.addProduct(formData,this.props.history);
         }
         console.log(this.state);
     }
@@ -320,6 +328,24 @@ class Product extends Component {
                             </div>
                         </div>
                     </div>
+                    <div className="col-12">
+                        <div className="container"  style={{marginTop : "20px",marginBottom : "20px"}}>
+                            <div className="progress">
+                                <div className="progress-bar" style={{width : this.state.progress + "%",textAlign : "center"}}></div>
+                            </div>
+                        </div>
+                    </div>
+                    {(this.state.progress === 100) ? (
+                    <div className="col-12">
+                        <div className="container">
+                            <div className="card">
+                                <div className="">
+                                    <Link to="/manager/dashboard" className="btn btn-primary btn-lg btn-block" >Dashboard</Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ) : ""}
                 </div>
                 </form>
             </div>
@@ -327,10 +353,15 @@ class Product extends Component {
     )}
 }
 Product.propTypes = {
-    errors : PropTypes.object.isRequired
+    errors : PropTypes.object.isRequired,
+    addProduct : PropTypes.func.isRequired,
+    auth : PropTypes.object.isRequired,
+    product : PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    errors : state.errors
+    errors : state.errors,
+    auth : state.auth,
+    product : state.product
 })
-export default connect(mapStateToProps , {})(Product);
+export default connect(mapStateToProps , { addProduct })(Product);

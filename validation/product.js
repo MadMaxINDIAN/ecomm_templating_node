@@ -10,8 +10,7 @@ module.exports = function validateProductInput(data) {
     data.description = !isEmpty(data.description) ? data.description : "";
     data.category = !isEmpty(data.category) ? data.category : "";
     data.price = !isEmpty(data.price) ? data.price : "";
-    // TODO
-    // data.highlights = !isEmpty(data.highlights) ? data.highlights : "";
+    data.highlights = !isEmpty(data.highlights) ? data.highlights : [];
     
     if (validator.isEmpty(data.title)){
         errors.title = 'Title is required';

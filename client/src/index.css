@@ -206,3 +206,20 @@ body {
   font-size: 2rem;
   text-align: center;
 }
+
+/* Product Page custom css */
+.product {
+  width: 100%;
+  min-height: 800px;
+  background-color: #eeeeee;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:#00C851;
+  color: white;
+  text-align: center;
+}

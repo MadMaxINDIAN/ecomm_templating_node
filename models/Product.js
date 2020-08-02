@@ -32,17 +32,12 @@ const ProductSchema = new Schema({
             }
         }
     ],
-    // TODO
-    // highlights : [
-    //     {
-    //         key : {
-    //             type : String
-    //         },
-    //         value : {
-    //             type : String
-    //         }
-    //     }
-    // ],
+    highlights : [
+        {
+            key : {type : String},
+            value : {type : String}
+        }
+    ],
     manager : {
         id : {
             type : String,
@@ -53,8 +48,19 @@ const ProductSchema = new Schema({
     },
     date : {
         type : Date
-    }
-    // TODO product image
+    },
+    images : [
+        {
+            fieldname : {type : String},
+            originalname : {type : String},
+            encoding : {type : String},
+            mimetype : {type : String},
+            destination : {type : String},
+            filename : {type : String},
+            path : {type : String},
+            size : {type : Number},
+        }
+    ]
     
 });
 

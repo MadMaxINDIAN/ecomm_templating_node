@@ -1,6 +1,5 @@
 import { SET_CURRENT_USER, SET_CURRENT_ADMIN, SET_CURRENT_MANAGER } from "./../actions/type";
-import isEmpty from "./../validation/isEmpty"
-import { StaticRouter } from "react-router-dom";
+import isEmpty from "./../validation/isEmpty";
 
 const initialState ={
     isAuthenticated :false,

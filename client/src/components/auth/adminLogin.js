@@ -54,7 +54,7 @@ class AdminLogin extends Component {
             <div className="container">
                 <div className="form header-margin">
                     <h1 style={{'textAlign' : "center"}}>Login</h1>
-                    <h3 style={{'textAlign' : "center"}}></h3>
+                    <h3 style={{'textAlign' : "center"}}>Admin Login</h3>
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <input 

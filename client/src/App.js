@@ -13,7 +13,6 @@ import Login from './components/auth/Login';
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import {setCurrentUser,setCurrentAdmin, setCurrentManager} from "./actions/authActions";
-import { decode } from 'jsonwebtoken';
 import { SET_CURRENT_USER, SET_CURRENT_ADMIN, SET_CURRENT_MANAGER } from './actions/type';
 import AdminLogin from './components/auth/adminLogin';
 import adminRegister from './components/auth/adminRegister';
@@ -21,6 +20,7 @@ import AdminScreen from "./Screens/AdminScreen";
 import ManagerLogin from './components/auth/managerLogin';
 import ManagerRegister from './components/auth/managerRegister';
 import ManagerScreen from "./Screens/ManagerScreen";
+import Product from './components/product/product';
 
 // Check for Token
 if (localStorage.jwtToken) {
@@ -94,7 +94,8 @@ function App() {
                 <Route path="/manager/login" exact={true} component={ManagerLogin} />
                 <Route path="/manager/register" exact={true} component={ManagerRegister} />
                 <Route path="manager/dashboard" exact={true} component={ManagerScreen} />
-                <Route path="/product/:productID" component={ProductScreen} />
+                <Route path="/api/product/:productID" component={ProductScreen} />
+                <Route path="/product/details/add" component={Product} exact={true}/>
                 <Route path="/register" exact={true} component={Register} />
                 <Route path="/login" exact={true} component={Login} />        
             </div>

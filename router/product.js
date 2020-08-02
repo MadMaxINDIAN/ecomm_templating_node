@@ -2,7 +2,35 @@ const express = require("express");
 const router = express.Router();
 const manager_passport = require("passport");
 require("./../config/manager-passport");
-const mongoose = require("mongoose");
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination : function(req,file,cb){
+        cb(null , "./uploads");
+    },
+    filename : function(req,file,cb){
+        cb(null , Date.now() + "__" + file.originalname)
+    }
+})
+
+const fileFilter = (req,files,cb) => {
+    // reject a file
+    if (files.mimetype === "image/jpeg" || files.mimetype === "image/pipeg" || files.mimetype === "image/png") {
+        cb(null , true);
+    } else {
+        cb(null ,false);
+    }
+    
+}
+
+const upload = multer({
+    storage : storage,
+    limits : {
+        // Maximum file size of 12MB
+        fileSize : 1024*1024*12
+    },
+    fileFilter : fileFilter
+
+});
 
 // Validation
 const validateProductInput = require("./../validation/product");
@@ -16,16 +44,23 @@ const { ObjectId } = require("mongoose");
 // @url     POST /api/product/details
 // @desc    Add or update product
 // @access  Private / Product Manager access only
-router.post("/details",manager_passport.authenticate('manager-jwt',{session:false}),(req,res) => {
+router.post("/details",manager_passport.authenticate('manager-jwt',{session:false}),upload.array("image",10),(req,res) => {
+    console.log(req.body);
+    console.log(req.files);
     const {errors,isValid} = validateProductInput(req.body);
-
+    
+    const highlights_array = []
+    if (typeof req.body.highlights === "string") {
+        highlights_array.push( JSON.parse(req.body.highlights) )
+    } else {
+        for (var i = 0;i < req.body.highlights.length; i++){
+            highlights_array.push(JSON.parse(req.body.highlights[i]))
+        }
+    }
+    console.log(highlights_array);
     if (!isValid){
         return res.status(400).json(errors)
     }
-
-    console.log(req.body);
-    
-    
     Product.findOne({title : req.body.title})
         .then(product => {
             if (product) {
@@ -43,9 +78,9 @@ router.post("/details",manager_passport.authenticate('manager-jwt',{session:fals
                     description : req.body.description,
                     category : req.body.category,
                     price : req.body.price,
-                    date : Date.now()
-                    // TODO
-                    // highlights : req.body.highlights
+                    date : Date.now(),
+                    images : req.files,
+                    highlights : highlights_array
                 })
 
                 newProduct.save()

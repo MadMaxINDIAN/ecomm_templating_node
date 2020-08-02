@@ -22,7 +22,7 @@ class AdminRegister extends Component {
     }
 
     componentDidMount (){
-        if (!this.props.auth.isAuthenticated) {
+        if (!this.props.auth.isAuthenticated || !localStorage.adminJwtToken ) {
             this.props.history.push("/");
         }
     }

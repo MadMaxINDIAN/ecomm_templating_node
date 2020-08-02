@@ -7,8 +7,8 @@
     "test": "node server.js",
     "server": "nodemon server.js",
     "client-install": "npm install --prefix client",
-    "client" : "npm start --prefix client",
-    "ecommerce" : "concurrently \"npm run server\" \"npm run client\""
+    "client": "npm start --prefix client",
+    "ecommerce": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "MadMaxIndian",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
+    "multer": "^1.4.2",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "react-redux": "^7.2.1",

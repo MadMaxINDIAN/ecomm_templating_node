@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 
-function ProductScreen(props){
+class ProductScreen extends Component {
+    render (){
     return (
-        <div>
-            ProductScreen
-        </div>
-    )
+        <div>Naman</div>
+    )}
 }
 
 export default ProductScreen;
